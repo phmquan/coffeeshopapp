@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.5.0"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("io.freefair.lombok") version "8.6"
 }
 
 group = "com.uit"
@@ -20,7 +21,7 @@ repositories {
 dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-websocket")
 	implementation ("org.springframework.boot:spring-boot-starter-data-redis") // Redis dependency
-    implementation ("org.springframework.boot:spring-boot-starter-mail") // Mail library (cho MailHog)
+    implementation ("org.springframework.boot:spring-boot-starter-mail")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
