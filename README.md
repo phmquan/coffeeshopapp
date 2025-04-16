@@ -1,0 +1,1 @@
+A powerful coffee shop application with Ai Agent chatbot
