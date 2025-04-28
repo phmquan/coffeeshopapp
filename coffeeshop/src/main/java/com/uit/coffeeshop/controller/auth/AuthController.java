@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,8 +75,8 @@ public class AuthController {
             ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin(
                     currentUserDB.getId(),
                     currentUserDB.getEmail(),
-                    currentUserDB.getName());
-//                    currentUserDB.getRole().getName());
+                    currentUserDB.getName(),
+                    currentUserDB.getAvatar());
             res.setUserLogin(userLogin);
         }
 
@@ -124,22 +125,19 @@ public class AuthController {
 
     @GetMapping("/auth/account")
     @ApiMessage("fetch account")
-    public ResponseEntity<ResLoginDTO.UserGetAccount> getAccount() {
-        String email = SecurityUtil.getCurrentUserLogin().isPresent()
-                ? SecurityUtil.getCurrentUserLogin().get()
-                : "";
-
-        User currentUserDB = this.userService.handleGetUserByUsername(email);
-        ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin();
-        ResLoginDTO.UserGetAccount userGetAccount = new ResLoginDTO.UserGetAccount();
-        if (currentUserDB != null) {
-            userLogin.setId(currentUserDB.getId());
-            userLogin.setEmail(currentUserDB.getEmail());
-            userLogin.setName(currentUserDB.getName());
-            userGetAccount.setUserLogin(userLogin);
+    public ResponseEntity<ResLoginDTO.UserLogin> getAccount(
+       @RequestHeader(value="Authorization") String authorizationToken 
+    ) {
+        String accessToken="";
+        if (authorizationToken != null && authorizationToken.startsWith("Bearer ")) {
+            accessToken = authorizationToken.substring(7); // Remove "Bearer "
         }
-
-        return ResponseEntity.ok().body(userGetAccount);
+        Jwt decodedToken=this.securityUtil.checkValidRefreshToken(accessToken);
+        String email=decodedToken.getSubject();
+        User currentUser=this.userService.getUserByEmail(email);
+        ResLoginDTO.UserLogin getAccount=new ResLoginDTO.UserLogin(currentUser.getId(),currentUser.getEmail(),currentUser.getName(),currentUser.getAvatar());
+        return ResponseEntity.ok(getAccount);
+        
     }
 
     @GetMapping("/auth/refresh")
@@ -166,8 +164,8 @@ public class AuthController {
             ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin(
                     currentUserDB.getId(),
                     currentUserDB.getEmail(),
-                    currentUserDB.getName());
-//                    currentUserDB.getRole().getName());
+                    currentUserDB.getName(),
+                    currentUserDB.getAvatar());
             res.setUserLogin(userLogin);
         }
 

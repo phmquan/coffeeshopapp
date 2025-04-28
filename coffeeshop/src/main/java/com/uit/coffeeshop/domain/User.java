@@ -48,6 +48,7 @@ public class User {
 
     private AccountStatus status;
 
+    private String avatar;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -79,10 +80,6 @@ public class User {
 
         this.createdAt = Instant.now();
     }
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name="cart_id")
-    private Cart cart;
     @PreUpdate
     public void handleBeforeUpdate() {
         this.updatedBy = SecurityUtil.getCurrentUserLogin().isPresent() == true

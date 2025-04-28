@@ -1,32 +1,19 @@
 package com.uit.coffeeshop.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.uit.coffeeshop.domain.User;
-import com.uit.coffeeshop.domain.response.ResCreateUserDTO;
-import com.uit.coffeeshop.domain.response.ResRegisterUserDTO;
-import com.uit.coffeeshop.domain.response.ResUpdateUserDTO;
-import com.uit.coffeeshop.domain.response.ResUserDTO;
-import com.uit.coffeeshop.domain.response.RestResponse;
-import com.uit.coffeeshop.domain.response.ResultPaginationDTO;
-import com.uit.coffeeshop.domain.response.ResultPaginationDTO.Meta;
 
-import com.uit.coffeeshop.repository.RoleRepository;
+import com.uit.coffeeshop.domain.response.ResRegisterUserDTO;
+
+
+
 import com.uit.coffeeshop.repository.UserRepository;
-import com.uit.coffeeshop.util.constant.AccountStatus;
+
 import com.uit.coffeeshop.util.error.IdInvalidException;
 
-import jakarta.validation.Valid;
+
 import lombok.AllArgsConstructor;
 
 @Service
@@ -69,4 +56,10 @@ public class UserService {
         return userRepository.findByRefreshTokenAndEmail(refresh_token, email);
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+    public User handleSaveUser(User postUser){
+        return userRepository.save(postUser);
+    }
 }
