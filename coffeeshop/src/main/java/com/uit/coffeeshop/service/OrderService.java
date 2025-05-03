@@ -25,7 +25,6 @@ import com.uit.coffeeshop.util.SecurityUtil;
 import com.uit.coffeeshop.util.constant.OrderStatus;
 import com.uit.coffeeshop.util.error.IdInvalidException;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.jwt.Jwt;
 
