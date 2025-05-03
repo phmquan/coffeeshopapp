@@ -2,6 +2,7 @@ package com.uit.coffeeshop.domain;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.uit.coffeeshop.util.SecurityUtil;
 
 import jakarta.persistence.Entity;
@@ -33,6 +34,7 @@ public class OrderDetails {
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="order_id")
     private Order order;

@@ -13,6 +13,6 @@ public class ProductDTO {
     private String description;
     private String image_url;
     private String name;
-    private Double price;
+    private Long price;
     private Double rating;
 }

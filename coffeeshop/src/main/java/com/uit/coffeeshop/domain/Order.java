@@ -3,6 +3,7 @@ package com.uit.coffeeshop.domain;
 import java.time.Instant;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.uit.coffeeshop.util.SecurityUtil;
 import com.uit.coffeeshop.util.constant.OrderStatus;
 
@@ -16,7 +17,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,10 +34,10 @@ public class Order {
     private Long id;
     private Long totalPrice;
     private String orderNote;
-    @Pattern(regexp = "^[\\w.-]+@[\\w.-]+\\.\\w{2,}$", message = "Email không hợp lệ")
     private String phoneNumber;
     private String receivedAddress;
     private String receivedName;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;

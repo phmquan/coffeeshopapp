@@ -37,7 +37,7 @@ public class Product {
 
     private String name;
 
-    private Double price;
+    private Long price;
 
     private Double rating;
 
