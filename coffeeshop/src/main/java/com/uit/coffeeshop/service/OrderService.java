@@ -133,7 +133,7 @@ public class OrderService {
     public Order updateOrderStatus(String id, String status) {
         Order currentOrder=orderRepository.findById(Long.parseLong(id)).orElse(null);
         if(currentOrder!=null){
-            currentOrder.setOrderStatus(OrderStatus.valueOf(status));
+            currentOrder.setOrderStatus(OrderStatus.valueOf(status.toUpperCase()));
         }
         return orderRepository.save(currentOrder);
     }

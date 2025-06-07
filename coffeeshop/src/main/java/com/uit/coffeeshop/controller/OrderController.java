@@ -52,9 +52,9 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PutMapping
+    @PutMapping("/{id}/{status}")
     @ApiMessage("Update Status Order")
-    public ResponseEntity<Order> updateOrderStatus(@RequestBody String id, @RequestBody String status){
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable String id, @PathVariable String status){
         return ResponseEntity.ok(orderService.updateOrderStatus(id,status));
     }
 }
